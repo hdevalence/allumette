@@ -1,0 +1,15 @@
+{
+	"registration" : {
+		"registration_threshold_percent" : 4,
+		"registration_noise_reduction"   : true
+	}
+	"stacking" : {
+		"crop_mode"                : "reference",
+		"light_algorithm"          : "average",
+		"dark_algorithm"           : "average",
+		"flat_algorithm"           : "average",
+		"bias_algorithm"           : "average",
+		"hot_pixel_removal"        : false,
+		"alignment_transformation" : "bilinear"
+	}
+}
