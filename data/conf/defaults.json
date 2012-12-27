@@ -2,7 +2,7 @@
 	"registration" : {
 		"registration_threshold_percent" : 4,
 		"registration_noise_reduction"   : true
-	}
+	},
 	"stacking" : {
 		"crop_mode"                : "reference",
 		"light_algorithm"          : "average",
