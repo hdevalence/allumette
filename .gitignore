@@ -23,3 +23,6 @@ install_manifest.txt
 # RAW files
 *.cr2
 
+# Vim swapfiles
+*.swp
+
