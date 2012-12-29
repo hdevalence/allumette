@@ -48,7 +48,7 @@ find_path(LIBRAW_INCLUDE_DIR NAMES libraw/libraw.h
           ${PC_LIBRAW_INCLUDE_DIRS}
         )
 
-find_library(LIBRAW_LIBRARY NAMES libraw.a
+find_library(LIBRAW_LIBRARY NAMES libraw_r.a
              HINTS
              ${PC_LIBRAW_LIBDIR}
              ${PC_LIBRAW_LIBRARY_DIRS}
