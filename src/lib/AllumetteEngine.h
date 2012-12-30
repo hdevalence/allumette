@@ -10,11 +10,11 @@ class AllumetteEngine : public QObject
 public:
 
 	/**
-     * @brief AllumetteEngine does the work of image stacking.
+	 * @brief AllumetteEngine does the work of image stacking.
 	 * @param params A JSON array containing the stacking parameters.
 	 * @param parent The parent QObject
 	 */
-    explicit AllumetteEngine(const QJsonArray& params, QObject *parent = 0);
+	explicit AllumetteEngine(const QJsonArray& params, QObject *parent = 0);
 
 	void stack();
 	
