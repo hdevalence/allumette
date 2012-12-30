@@ -6,9 +6,9 @@
 /**
  * @brief The EImage class holds an image as an Eigen array.
  *
- * It allows two methods of access:
- * 1.  As a glorified struct, with direct read/write access
- * 2.  An interface to the data which handles translations, etc.
+ * It acts as a glorified struct, with direct read/write access.
+ * We need it only because our pixel data is an Eigen array and
+ * Eigen does not support multidimensional arrays.
  */
 class EImage
 {
@@ -17,41 +17,21 @@ public:
 	 * @brief i holds the image data
 	 *
 	 * Pixels are RGBA float arrays.
-	 * @p i has rows * cols columns, with pixels set out in
+	 * i has w*h columns, with pixels set out in
 	 * column-major order, i.e., like Eigen or Fortran.
 	 */
-	Eigen::Array4Xf i;
-	int width;
-	int height;
-	bool valid;
-
+	Eigen::Array4Xf* i;
+	int w;
+	int h;
 	/**
-	 * @brief Constructs an image from existing data
-	 * @param image The image data
-	 * @param w The width of the image
-	 * @param h The height of the image
+	 * @brief Constructs an image from existing data.
 	 */
-	EImage(Eigen::Array4Xf image, int w, int h);
-
-	/**
-	 * @brief Constructs an invalid image.
-	 */
-	EImage();
-
-	void setTransform(const Eigen::Matrix3f& transform);
-
-	/**
-	 * @brief Get pixel under transformation.
-	 * @param i the x coordinate
-	 * @param j the y coordinate
-	 * @return the pixel value
-	 */
-	inline Eigen::Array4f get(int i, int j);
-private:
-	Eigen::Matrix3f mTransform = Eigen::Matrix3f::Identity();
-	Eigen::Vector3f mCoordInBuf  = Eigen::Vector3f(0,0,1);
-	Eigen::Vector3f mCoordOutBuf = Eigen::Vector3f(0,0,1);
-	static const Eigen::Array4f OUT_OF_BOUNDS_PX = Eigen::Array4f::Zero();
+	EImage(Eigen::Array4Xf* image, int width, int height)
+	{
+		i = image;
+		w = width;
+		h = height;
+	}
 };
 
 #endif // EIMAGE_H

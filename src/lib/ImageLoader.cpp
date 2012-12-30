@@ -5,7 +5,7 @@ ImageLoader::ImageLoader()
 {
 }
 
-EImage ImageLoader::load(const QString &filename)
+EImage* ImageLoader::load(const QString &filename)
 {
 	const char * fn = filename.toLocal8Bit().constData();
 	int err = mRaw.open_file(fn);
@@ -23,13 +23,13 @@ EImage ImageLoader::load(const QString &filename)
 	int width = mRaw.imgdata.sizes.iwidth;
 	int size = height * width;
 	// then convert to array of float
-	Eigen::Array4Xf image(4, size);
+	Eigen::Array4Xf* image = new Eigen::Array4Xf(4, size);
 	unsigned short (*ptr)[4] = mRaw.imgdata.image;
 	for(int i = 0; i < size; ++i) {
 		for(int j = 0; j < 4; ++j) {
 			// NB. Eigen uses column-major order by default.
-			image(j,i) = (*(ptr + i))[j];
+			(*image)(j,i) = (*(ptr + i))[j];
 		}
 	}
-	return EImage(image, width, height);
+	return new EImage(image, width, height);
 }
