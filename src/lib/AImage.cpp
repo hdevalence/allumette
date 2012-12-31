@@ -49,6 +49,11 @@ const Eigen::Array4f &SourceFrame::getTransformed(int i, int j) const
 	m_coordOutBuf = m_transform * m_coordInBuf;
 	i = static_cast<int>(m_coordOutBuf[0]);
 	j = static_cast<int>(m_coordOutBuf[1]);
+	return this->get(i,j);
+}
+
+const Eigen::Array4f &SourceFrame::get(int i, int j) const
+{
 	if( i < 0 || i >= w || j < 0 || j >= h ) {
 		return OUT_OF_BOUNDS_PX;
 	} else {

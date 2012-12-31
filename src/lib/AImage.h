@@ -34,6 +34,8 @@ public:
 	 * @return the pixel value
 	 */
 	inline const Eigen::Array4f& getTransformed(int i, int j) const;
+
+	inline const Eigen::Array4f& get(int i, int j) const;
 private:
 	FrameType m_type;
 	QString m_filename;
