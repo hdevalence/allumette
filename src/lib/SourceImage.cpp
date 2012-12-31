@@ -63,3 +63,26 @@ const Eigen::Array4f &SourceFrame::get(int i, int j) const
 }
 
 
+SourceFrame::SourceImage &SourceFrame::operator =(const SourceFrame::SourceImage &s)
+{
+}
+
+
+SourceFrame::SourceImage(const SourceFrame::SourceImage &s)
+{
+}
+
+int SourceFrame::width() const
+{
+	return m_image->w;
+}
+
+int SourceFrame::height() const
+{
+	return m_image->h;
+}
+
+int SourceFrame::numPixels() const
+{
+	return m_image->cols();
+}

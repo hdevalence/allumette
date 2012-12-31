@@ -25,6 +25,10 @@ public:
 
 	const EImage& imageData() const;
 
+	int width() const;
+	int height() const;
+	int numPixels() const;
+
 	void setTransform(const Eigen::Matrix3f& transform);
 
 	/**
@@ -37,6 +41,9 @@ public:
 
 	inline const Eigen::Array4f& get(int i, int j) const;
 private:
+	// Disallow copying
+	SourceImage(const SourceImage& s);
+	SourceImage& operator=(const SourceImage& s);
 	FrameType m_type;
 	QString m_filename;
 	EImage* m_image;
