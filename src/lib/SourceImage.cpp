@@ -1,4 +1,4 @@
-#include "AImage.h"
+#include "SourceFrame.h"
 
 SourceFrame::SourceFrame()
 {

@@ -1,5 +1,5 @@
-#ifndef AIMAGE_H
-#define AIMAGE_H
+#ifndef SOURCEFRAME_H
+#define SOURCEFRAME_H
 
 class SourceFrame
 {
@@ -46,4 +46,4 @@ private:
 	static const Eigen::Array4f OUT_OF_BOUNDS_PX = Eigen::Array4f::Zero();
 };
 
-#endif // AIMAGE_H
+#endif // SOURCEFRAME_H
