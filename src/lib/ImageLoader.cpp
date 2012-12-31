@@ -16,7 +16,8 @@ EImage* ImageLoader::load(const QString &filename)
 	if( err != LIBRAW_SUCCESS )
 		abort(); //TODO: error handling
 	// now we debayer
-	err = mRaw.raw2image();
+	// Todo: implement our own raw processing
+	err = mRaw.dcraw_process();
 	if( err != LIBRAW_SUCCESS )
 		abort(); //TODO: error handling
 	int height = mRaw.imgdata.sizes.iheight;
@@ -26,6 +27,8 @@ EImage* ImageLoader::load(const QString &filename)
 	Eigen::Array4Xf* image = new Eigen::Array4Xf(4, size);
 	unsigned short (*ptr)[4] = mRaw.imgdata.image;
 	for(int i = 0; i < size; ++i) {
+		// Saturate alpha channel
+		(*(ptr + i))[3] = (1 << 16) -1;
 		for(int j = 0; j < 4; ++j) {
 			// NB. Eigen uses column-major order by default.
 			(*image)(j,i) = (*(ptr + i))[j];
