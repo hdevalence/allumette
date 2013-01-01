@@ -44,8 +44,8 @@ public:
 	inline const Eigen::Array4f& get(int i, int j) const;
 private:
 	// Disallow copying
-	SourceImage(const SourceImage& s);
-	SourceImage& operator=(const SourceImage& s);
+	SourceFrame(const SourceFrame& s);
+	SourceFrame& operator=(const SourceFrame& s);
 	FrameType m_type;
 	QString m_filename;
 	EImage* m_image;

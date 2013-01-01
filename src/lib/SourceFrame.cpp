@@ -63,13 +63,15 @@ const Eigen::Array4f &SourceFrame::get(int i, int j) const
 }
 
 
-SourceFrame::SourceImage &SourceFrame::operator =(const SourceFrame::SourceImage &s)
+SourceFrame& operator=(const SourceFrame &s)
 {
+	// NOOP
 }
 
 
-SourceFrame::SourceImage(const SourceFrame::SourceImage &s)
+SourceFrame(const SourceFrame &s)
 {
+	// NOOP
 }
 
 int SourceFrame::width() const
