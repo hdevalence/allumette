@@ -5,10 +5,10 @@ StackerBuffer::StackerBuffer(const SourceFrameList &images, int offset)
 	m_numImages = images.size();
 	int sourcePixels = images[0].numPixels();
 	int m_numPixels = 0;
-	int stop  = offset + BUFFER_SIZE;
+	int stop  = offset + MAX_BUFFER_SIZE;
 
 	if(stop < sourcePixels) {
-		m_numPixels = BUFFER_SIZE;
+		m_numPixels = MAX_BUFFER_SIZE;
 	} else {
 		stop = sourcePixels;
 		m_numPixels = sourcePixels-offset;

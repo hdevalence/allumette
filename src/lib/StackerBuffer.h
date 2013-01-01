@@ -19,7 +19,7 @@
 class StackerBuffer
 {
 public:
-	static const int BUFFER_SIZE = 1 << 16;
+	static const int MAX_BUFFER_SIZE = 1 << 16;
 	StackerBuffer(const SourceFrameList& images, int offset);
 	int numImages() const;
 	int numPixels() const;
