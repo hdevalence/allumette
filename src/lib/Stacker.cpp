@@ -30,7 +30,6 @@ EImage Stacker::stack()
 			abort();
 	}
 
-	int width = m_images[0].width();
 	Eigen::Array4Xf* output = new Eigen::Array4Xf(4, numPixels);
 	for(int block = 0; block < numPixels;
 		block += StackerBuffer::MAX_BUFFER_SIZE)
@@ -39,7 +38,7 @@ EImage Stacker::stack()
 		stackFunction(buf,output,block);
 	}
 
-	return EImage(output,m_images[0].width(),m_images[0].height());
+	return EImage(output,m_images[0]->width(),m_images[0]->height());
 }
 
 // Stacking Methods

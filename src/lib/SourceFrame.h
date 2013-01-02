@@ -1,7 +1,7 @@
 #ifndef SOURCEFRAME_H
 #define SOURCEFRAME_H
 
-typedef std::vector<SourceFrame&> SourceFrameList;
+typedef std::vector<SourceFrame*> SourceFrameList;
 
 class SourceFrame
 {

@@ -16,13 +16,17 @@ public:
 	 */
 	explicit AllumetteEngine(const QJsonArray& params, QObject *parent = 0);
 
-	void stack();
+	EImage stack();
 	
+	void setParams(const QJsonArray& params);
 signals:
 	
 public slots:
 	
 private:
+	void updateFrames();
+	SourceFrameList addFrames();
+	SourceFrameList m_lightFrames;
 	QJsonArray m_params;
 };
 
