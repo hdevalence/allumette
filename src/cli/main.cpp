@@ -25,6 +25,11 @@
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
 #include <QtCore/QByteArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonArray>
+
+#include "AllumetteEngine.h"
+#include "EImage.h"
 
 int main(int argc, char** argv) {
 	QCoreApplication app(argc, argv);
@@ -43,6 +48,9 @@ int main(int argc, char** argv) {
 	// Just print it out rather than do anything,
 	// to have something minimal to test the build system
 	out << json;
+	QJsonObject params = QJsonDocument::fromJson(json).object();
+	AllumetteEngine engine(params);
+	EImage i = engine.stack();
 	return 0;
 }
 

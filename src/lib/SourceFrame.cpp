@@ -38,7 +38,7 @@ const EImage &SourceFrame::imageData() const
 	return *m_image;
 }
 
-const Eigen::Array4f &SourceFrame::getTransformed(int i, int j) const
+Eigen::Array4f SourceFrame::getTransformed(int i, int j) const
 {
 	// FIXME: We're assuming that 1*1*.....*1 = 1.
 	// Is this true, or do we need to worry about float error?
@@ -50,7 +50,7 @@ const Eigen::Array4f &SourceFrame::getTransformed(int i, int j) const
 	return this->get(i,j);
 }
 
-const Eigen::Array4f &SourceFrame::get(int i, int j) const
+Eigen::Array4f SourceFrame::get(int i, int j) const
 {
 	if( i < 0 || i >= width() || j < 0 || j >= height() ) {
 		return OUT_OF_BOUNDS_PX;

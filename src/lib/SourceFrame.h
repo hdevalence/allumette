@@ -50,9 +50,9 @@ public:
 	 * @param j the y coordinate
 	 * @return the pixel value
 	 */
-	inline const Eigen::Array4f& getTransformed(int i, int j) const;
+	Eigen::Array4f getTransformed(int i, int j) const;
 
-	inline const Eigen::Array4f& get(int i, int j) const;
+	Eigen::Array4f get(int i, int j) const;
 private:
 	// Disallow copying
 	SourceFrame(const SourceFrame& s);

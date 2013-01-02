@@ -1,6 +1,7 @@
 #include "AllumetteEngine.h"
 
 #include <QtCore/QJsonArray>
+#include <QtCore/QDebug>
 
 #include "Stacker.h"
 
@@ -39,7 +40,9 @@ void AllumetteEngine::updateFrames()
 	for(int i = 0; i < m_lightFrames.size(); ++i) {
 		delete m_lightFrames[i];
 	}
+	qDebug() << m_params;
 	QJsonArray lightFrames = m_params.value("light_frames").toArray();
+	qDebug() << lightFrames;
 	m_lightFrames = addFrames(lightFrames,SourceFrame::LightFrame);
 }
 
