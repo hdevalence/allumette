@@ -1,6 +1,17 @@
 #ifndef SOURCEFRAME_H
 #define SOURCEFRAME_H
 
+#include <vector>
+
+#include <Eigen/Core>
+
+#include <QtCore/QString>
+
+#include "EImage.h"
+
+class ImageLoader;
+class SourceFrame;
+
 typedef std::vector<SourceFrame*> SourceFrameList;
 
 class SourceFrame
@@ -46,13 +57,13 @@ private:
 	// Disallow copying
 	SourceFrame(const SourceFrame& s);
 	SourceFrame& operator=(const SourceFrame& s);
-	FrameType m_type;
+	FrameType m_frameType;
 	QString m_filename;
 	EImage* m_image;
 	Eigen::Matrix3f m_transform = Eigen::Matrix3f::Identity();
 	mutable Eigen::Vector3f m_coordInBuf  = Eigen::Vector3f(0,0,1);
 	mutable Eigen::Vector3f m_coordOutBuf = Eigen::Vector3f(0,0,1);
-	static const Eigen::Array4f OUT_OF_BOUNDS_PX = Eigen::Array4f::Zero();
+	const Eigen::Array4f OUT_OF_BOUNDS_PX = Eigen::Array4f(0,0,0,0);
 };
 
 #endif // SOURCEFRAME_H

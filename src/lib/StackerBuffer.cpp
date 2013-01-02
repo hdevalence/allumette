@@ -18,10 +18,10 @@ StackerBuffer::StackerBuffer(const SourceFrameList &images, int offset)
 	int width = images[0]->width();
 	for(int i = 0; i < m_numImages; ++i) {
 		SourceFrame* image = images[i];
-		for(int j = start; j < stop; ++j) {
+		for(int j = offset; j < stop; ++j) {
 			int x = j % width;
 			int y = j / width;
-			buf->col(j*numimages + i) = image->getTransformed(x,y);
+			m_buf.col(j*m_numImages + i) = image->getTransformed(x,y);
 		}
 	}
 }

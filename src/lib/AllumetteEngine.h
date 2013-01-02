@@ -2,7 +2,9 @@
 #define ALLUMETTEENGINE_H
 
 #include <QtCore/QObject>
-#include <QtCore/QJsonArray>
+#include <QtCore/QJsonObject>
+
+#include "SourceFrame.h"
 
 class AllumetteEngine : public QObject
 {
@@ -14,20 +16,21 @@ public:
 	 * @param params A JSON array containing the stacking parameters.
 	 * @param parent The parent QObject
 	 */
-	explicit AllumetteEngine(const QJsonArray& params, QObject *parent = 0);
+	explicit AllumetteEngine(const QJsonObject& params, QObject *parent = 0);
 
 	EImage stack();
 	
-	void setParams(const QJsonArray& params);
+	void setParams(const QJsonObject& params);
 signals:
 	
 public slots:
 	
 private:
 	void updateFrames();
-	SourceFrameList addFrames();
+	SourceFrameList addFrames(const QJsonArray& a,
+	                          SourceFrame::FrameType t);
 	SourceFrameList m_lightFrames;
-	QJsonArray m_params;
+	QJsonObject m_params;
 };
 
 #endif // ALLUMETTEENGINE_H

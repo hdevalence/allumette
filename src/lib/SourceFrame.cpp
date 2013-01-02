@@ -1,8 +1,6 @@
 #include "SourceFrame.h"
 
-SourceFrame::SourceFrame()
-{
-}
+#include "ImageLoader.h"
 
 SourceFrame::SourceFrame(const QString &filename, ImageLoader *loader)
 {
@@ -54,22 +52,22 @@ const Eigen::Array4f &SourceFrame::getTransformed(int i, int j) const
 
 const Eigen::Array4f &SourceFrame::get(int i, int j) const
 {
-	if( i < 0 || i >= w || j < 0 || j >= h ) {
+	if( i < 0 || i >= width() || j < 0 || j >= height() ) {
 		return OUT_OF_BOUNDS_PX;
 	} else {
-		int idx = width * i + j;
-		return m_image->i.col(idx);
+		int idx = width() * i + j;
+		return m_image->i->col(idx);
 	}
 }
 
 
-SourceFrame& operator=(const SourceFrame &s)
+SourceFrame& SourceFrame::operator=(const SourceFrame &s)
 {
 	// NOOP
 }
 
 
-SourceFrame(const SourceFrame &s)
+SourceFrame::SourceFrame(const SourceFrame &s)
 {
 	// NOOP
 }
@@ -86,5 +84,5 @@ int SourceFrame::height() const
 
 int SourceFrame::numPixels() const
 {
-	return m_image->cols();
+	return m_image->i->cols();
 }

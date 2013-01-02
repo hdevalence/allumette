@@ -1,6 +1,10 @@
 #ifndef STACKERBUFFER_H
 #define STACKERBUFFER_H
 
+#include <Eigen/Core>
+
+#include "SourceFrame.h"
+
 /** The buffer is held as an Array4Xf, with the pixels from the
 	same location but different images next to each other, and then in
 	rows with regard to the output order:
@@ -14,7 +18,6 @@
 	Each call to stack() creates a new buffer.
 	2^16 pixels * 4 bpp * 4 channels = 1 MB per image.
  */
-
 
 class StackerBuffer
 {

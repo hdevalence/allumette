@@ -1,7 +1,7 @@
 #ifndef STACKER_H
 #define STACKER_H
 
-#include "SourceImage.h"
+#include "SourceFrame.h"
 
 /**
  * @brief The Stacker class is responsible for stacking
@@ -19,7 +19,7 @@ public:
 	Method method() const;
 	void setMethod(Method method);
 
-	EImage Stacker::stack();
+	EImage stack();
 private:
 	const SourceFrameList& m_frames;
 	Method m_method = MeanStacking;
