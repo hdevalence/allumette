@@ -38,7 +38,7 @@ void AllumetteEngine::updateFrames()
 }
 
 SourceFrameList AllumetteEngine::addFrames(const QJsonArray& a,
-										   SourceFrame::FrameType t)
+                                           SourceFrame::FrameType t)
 {
 	SourceFrameList s;
 	for(int i = 0; i < a.size(); ++i) {

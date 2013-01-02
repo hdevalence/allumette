@@ -45,8 +45,8 @@ EImage Stacker::stack()
 
 namespace Mean {
 void stack(const StackerBuffer& buf,
-		   Eigen::Array4Xf* dest,
-		   int destIndex)
+           Eigen::Array4Xf* dest,
+           int destIndex)
 {
 	// s is the part of the pixel stack
 	// corresponding to pixel i
