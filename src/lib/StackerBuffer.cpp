@@ -1,27 +1,22 @@
 #include "StackerBuffer.h"
 
-StackerBuffer::StackerBuffer(const SourceFrameList &images, int offset)
+StackerBuffer::StackerBuffer(int num_frames)
+{
+	m_numImages = num_frames;
+	m_buf = Eigen::Array4Xf(4,m_numImages*BUFFER_SIZE*BUFFER_SIZE);
+}
+
+StackerBuffer::StackerBuffer(const SourceFrameList &images, int x, int y)
 {
 	m_numImages = images.size();
-	int sourcePixels = images[0]->numPixels();
-	int m_numPixels = 0;
-	int stop  = offset + MAX_BUFFER_SIZE;
+	m_buf = Eigen::Array4Xf(4,m_numImages*BUFFER_SIZE*BUFFER_SIZE);
 
-	if(stop < sourcePixels) {
-		m_numPixels = MAX_BUFFER_SIZE;
-	} else {
-		stop = sourcePixels;
-		m_numPixels = sourcePixels-offset;
-	}
-
-	m_buf = Eigen::Array4Xf(4,m_numImages*m_numPixels);
-	int width = images[0]->width();
 	for(int i = 0; i < m_numImages; ++i) {
 		SourceFrame* image = images[i];
-		for(int j = offset; j < stop; ++j) {
-			int x = j % width;
-			int y = j / width;
-			m_buf.col(j*m_numImages + i) = image->getTransformed(x,y);
+		for(int x; x < BUFFER_SIZE; ++x) {
+			for(int y; y < BUFFER_SIZE; ++y) {
+				m_buf.col( bufIdx(i,x,y) ) = image->getTransformed(x,y);
+			}
 		}
 	}
 }
@@ -29,11 +24,6 @@ StackerBuffer::StackerBuffer(const SourceFrameList &images, int offset)
 int StackerBuffer::numImages() const
 {
 	return m_numImages;
-}
-
-int StackerBuffer::numPixels() const
-{
-	return m_numPixels;
 }
 
 Eigen::Array4Xf& StackerBuffer::buffer()

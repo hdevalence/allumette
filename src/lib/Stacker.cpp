@@ -10,18 +10,18 @@
 
 namespace Mean {
 void stack(const StackerBuffer& buf,
-           Eigen::Array4Xf* dest,
-           int destIndex)
+           StackerBuffer* dest)
 {
 	int numImages = buf.numImages();
-	int numPixels = buf.numPixels();
 	const Eigen::Array4Xf src = buf.buffer();
-	for(int i = 0; i < numPixels; ++i) {
+	for(int x = 0; x < StackerBuffer::BUFFER_SIZE; ++x) {
+		for(int y = 0; y < StackerBuffer::BUFFER_SIZE; ++y) {
 		// s is the part of the pixel stack
-		// corresponding to pixel i
-		Eigen::Block<const Eigen::Array4Xf> s = src.block(0,i*numImages,4,numImages);
+		// corresponding to pixel x,y
+		auto s = src.block(0, numImages*StackerBuffer::bufIdx(0,x,y),
+		                   4, numImages);
 		// Mean of columns
-		dest->col(destIndex + i) = s.rowwise().mean();
+		dest->col(StackerBuffer::bufIdx(0,x,y)) = s.rowwise().mean();
 	}
 }
 } // NS Mean
@@ -46,7 +46,7 @@ void Stacker::setMethod(Stacker::Method method)
 
 EImage Stacker::stack()
 {
-	void (*stackFunction)(const StackerBuffer&, Eigen::Array4Xf*, int) = 0;
+	void (*stackFunction)(const StackerBuffer&, StackerBuffer*, int) = 0;
 	switch(m_method) {
 		case Stacker::MeanStacking:
 			stackFunction = &Mean::stack;
@@ -54,15 +54,21 @@ EImage Stacker::stack()
 		default:
 			abort();
 	}
-	int numPixels = m_frames[0]->numPixels();
-	Eigen::Array4Xf* output = new Eigen::Array4Xf(4, numPixels);
-	for(int block = 0; block < numPixels;
-		block += StackerBuffer::MAX_BUFFER_SIZE)
-	{
-		StackerBuffer buf(m_frames, block);
-		stackFunction(buf,output,block);
+
+	int w = m_frames[0]->width();
+	int h = m_frames[0]->height();
+	Eigen::Array4Xf* i = new Eigen::Array4Xf(4,w*h);
+	EImage img(i,w,h);
+
+	for(int x = 0; x < w; x += StackerBuffer::BUFFER_SIZE) {
+		for(int y = 0; y < h; y += StackerBuffer::BUFFER_SIZE) {
+			StackerBuffer buf(m_frames,x,y);
+			StackerBuffer out(1);
+			stackFunction(buf, &out);
+		}
 	}
 
-	return EImage(output,m_frames[0]->width(),m_frames[0]->height());
+	// TODO: copy stacked data into output.
+	return img;
 }
 

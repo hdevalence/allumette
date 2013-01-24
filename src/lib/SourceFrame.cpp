@@ -38,29 +38,6 @@ const EImage &SourceFrame::imageData() const
 	return *m_image;
 }
 
-Eigen::Array4f SourceFrame::getTransformed(int i, int j) const
-{
-	// FIXME: We're assuming that 1*1*.....*1 = 1.
-	// Is this true, or do we need to worry about float error?
-	m_coordInBuf[0] = i;
-	m_coordInBuf[1] = j;
-	m_coordOutBuf = m_transform * m_coordInBuf;
-	i = static_cast<int>(m_coordOutBuf[0]);
-	j = static_cast<int>(m_coordOutBuf[1]);
-	return this->get(i,j);
-}
-
-Eigen::Array4f SourceFrame::get(int i, int j) const
-{
-	if( i < 0 || i >= width() || j < 0 || j >= height() ) {
-		return OUT_OF_BOUNDS_PX;
-	} else {
-		int idx = width() * i + j;
-		return m_image->i->col(idx);
-	}
-}
-
-
 SourceFrame& SourceFrame::operator=(const SourceFrame &s)
 {
 	// NOOP
@@ -85,4 +62,4 @@ int SourceFrame::height() const
 int SourceFrame::numPixels() const
 {
 	return m_image->i->cols();
-}
+}:

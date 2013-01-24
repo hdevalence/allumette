@@ -44,15 +44,17 @@ public:
 
 	void setTransform(const Eigen::Matrix3f& transform);
 
-	/**
-	 * @brief Get pixel under transformation.
-	 * @param i the x coordinate
-	 * @param j the y coordinate
-	 * @return the pixel value
-	 */
-	Eigen::Array4f getTransformed(int i, int j) const;
-
-	Eigen::Array4f get(int i, int j) const;
+	inline Eigen::Array4f getTransformed(int i, int j) const
+	{
+		// FIXME: We're assuming that 1*1*.....*1 = 1.
+		// Is this true, or do we need to worry about float error?
+		m_coordInBuf[0] = i;
+		m_coordInBuf[1] = j;
+		m_coordOutBuf = m_transform * m_coordInBuf;
+		i = static_cast<int>(m_coordOutBuf[0]);
+		j = static_cast<int>(m_coordOutBuf[1]);
+		return m_image->get(i,j);
+	}
 private:
 	// Disallow copying
 	SourceFrame(const SourceFrame& s);
