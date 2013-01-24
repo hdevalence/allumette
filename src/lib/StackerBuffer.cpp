@@ -1,4 +1,5 @@
 #include "StackerBuffer.h"
+#include "SourceFrame.h"
 
 StackerBuffer::StackerBuffer(int num_frames)
 {

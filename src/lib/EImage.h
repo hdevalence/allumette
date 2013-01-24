@@ -3,6 +3,8 @@
 
 #include <Eigen/Core>
 
+#include "StackerBuffer.h"
+
 /**
  * @brief The EImage class holds an image as an Eigen array.
  *
@@ -23,6 +25,8 @@ public:
 	Eigen::Array4Xf* img;
 	int w;
 	int h;
+
+	const Eigen::Array4f OUT_OF_BOUNDS_PX = Eigen::Array4f(0,0,0,0);
 	
 	/**
 	 * @brief Constructs an image from existing data.
@@ -39,12 +43,12 @@ public:
 		if( x < 0 || x >= w || y < 0 || y >= h ) {
 			return OUT_OF_BOUNDS_PX;
 		} else {
-			int idx = bufIdx(x,y);
+			int idx = buf_idx(x,y);
 			return img->col(idx);
 		}
 	}
 
-	inline int buf_idx(int x, int y)
+	inline int buf_idx(int x, int y) const
 	{
 		return x*w + y;
 	}

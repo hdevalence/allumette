@@ -9,19 +9,21 @@
 // Stacking Methods
 
 namespace Mean {
-void stack(const StackerBuffer& buf,
+void stack(const StackerBuffer& src,
            StackerBuffer* dest)
 {
-	int numImages = buf.numImages();
-	const Eigen::Array4Xf src = buf.buffer();
+	int numImages = src.numImages();
+	const Eigen::Array4Xf src_buf = src.buffer();
+	Eigen::Array4Xf dest_buf = dest->buffer();
 	for(int x = 0; x < StackerBuffer::BUFFER_SIZE; ++x) {
 		for(int y = 0; y < StackerBuffer::BUFFER_SIZE; ++y) {
-		// s is the part of the pixel stack
-		// corresponding to pixel x,y
-		auto s = src.block(0, numImages*StackerBuffer::bufIdx(0,x,y),
-		                   4, numImages);
-		// Mean of columns
-		dest->col(StackerBuffer::bufIdx(0,x,y)) = s.rowwise().mean();
+			// s is the part of the pixel stack
+			// corresponding to pixel x,y
+			auto s = src_buf.block(0, numImages * src.bufIdx(0,x,y),
+			                       4, numImages);
+			// Mean of columns
+			dest_buf.col(src.bufIdx(0,x,y)) = s.rowwise().mean();
+		}
 	}
 }
 } // NS Mean
@@ -46,7 +48,7 @@ void Stacker::setMethod(Stacker::Method method)
 
 EImage Stacker::stack()
 {
-	void (*stackFunction)(const StackerBuffer&, StackerBuffer*, int) = 0;
+	void (*stackFunction)(const StackerBuffer&, StackerBuffer*) = 0;
 	switch(m_method) {
 		case Stacker::MeanStacking:
 			stackFunction = &Mean::stack;

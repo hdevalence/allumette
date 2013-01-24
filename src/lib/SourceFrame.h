@@ -65,7 +65,6 @@ private:
 	Eigen::Matrix3f m_transform = Eigen::Matrix3f::Identity();
 	mutable Eigen::Vector3f m_coordInBuf  = Eigen::Vector3f(0,0,1);
 	mutable Eigen::Vector3f m_coordOutBuf = Eigen::Vector3f(0,0,1);
-	const Eigen::Array4f OUT_OF_BOUNDS_PX = Eigen::Array4f(0,0,0,0);
 };
 
 #endif // SOURCEFRAME_H

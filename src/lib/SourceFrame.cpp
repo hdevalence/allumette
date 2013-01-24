@@ -19,7 +19,8 @@ SourceFrame::SourceFrame(const QString &filename, ImageLoader *loader)
 
 SourceFrame::~SourceFrame()
 {
-	delete m_image->i;
+    //FIXME: memory ownership semantics on images?
+	delete m_image->img;
 	delete m_image;
 }
 
@@ -61,5 +62,5 @@ int SourceFrame::height() const
 
 int SourceFrame::numPixels() const
 {
-	return m_image->i->cols();
-}:
+	return width()*height();
+}
